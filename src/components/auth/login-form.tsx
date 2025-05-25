@@ -19,12 +19,12 @@ import { formatDocument } from "@/hooks/use-document";
 import api from "@/services/api";
 import { toast } from "@/hooks/use-toast";
 import { setCookie } from "typescript-cookie";
-
 interface LoginFormProps {
   onRegisterClick: () => void;
+  onLogin: () => void;
 }
 
-export function LoginForm({ onRegisterClick }: LoginFormProps) {
+export function LoginForm({ onRegisterClick, onLogin }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -48,8 +48,10 @@ export function LoginForm({ onRegisterClick }: LoginFormProps) {
           description: "Login realizado com sucesso",
           variant: "success",
         });
+        onLogin();
       }
     } catch (error) {
+      setIsLoading(false);
       console.error(error);
     }
   }

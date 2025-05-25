@@ -58,6 +58,7 @@ export function RegisterForm({ onLoginClick }: RegisterFormProps) {
           description: "Cadastro realizado com sucesso!",
           variant: "success",
         });
+        onLoginClick();
       }
     } catch (error) {
       console.error(error);

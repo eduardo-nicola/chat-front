@@ -5,14 +5,19 @@ import { AnimatedBackground } from "@/components/auth/animated-background";
 import { AuthCard } from "@/components/auth/auth-card";
 import { LoginForm } from "@/components/auth/login-form";
 import { RegisterForm } from "@/components/auth/register-form";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
+  function finshLogin() {
+    router.push("/home");
+  }
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
       <AnimatedBackground />
-      
+
       <div className="w-full max-w-md px-4 py-8 z-10">
         <AuthCard>
           <div className="w-full space-y-6">
@@ -21,13 +26,17 @@ export default function AuthPage() {
                 {isLogin ? "Bem-vindo de volta" : "Crie uma conta"}
               </h1>
               <p className="text-muted-foreground mt-2">
-                {isLogin ? ("Insira suas credenciais para acessar sua conta") :
-                ("Preencha seus dados para começar")}
+                {isLogin
+                  ? "Insira suas credenciais para acessar sua conta"
+                  : "Preencha seus dados para começar"}
               </p>
             </div>
-            
+
             {isLogin ? (
-              <LoginForm onRegisterClick={() => setIsLogin(false)} />
+              <LoginForm
+                onRegisterClick={() => setIsLogin(false)}
+                onLogin={() => finshLogin()}
+              />
             ) : (
               <RegisterForm onLoginClick={() => setIsLogin(true)} />
             )}

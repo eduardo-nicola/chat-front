@@ -39,7 +39,7 @@ api.interceptors.response.use(
       if (typeof data.message === "string") {
         message = data.message;
       } else if (Array.isArray(data.message)) {
-        message = data.message.join("\n");
+        message = data.message[0];
       } else {
         message = defaultMessage;
       }
