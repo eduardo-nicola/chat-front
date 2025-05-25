@@ -1,7 +1,5 @@
+import { ChatLayout } from '@/components/chat/chat-layout'
+
 export default function HomePage() {
-  return (
-    <div>
-      <h1>Ta logado</h1>
-    </div>
-  );
+  return <ChatLayout />
 }
