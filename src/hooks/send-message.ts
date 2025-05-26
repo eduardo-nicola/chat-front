@@ -7,7 +7,7 @@ export const sendMessageSchema = z.object({
     .string()
     .min(10, "Digite o número com DDD")
     .regex(
-      /^(\d{2})(\d{8,9})$/,
+      /^(\d{2})(\d{7,8})$/,
       "Formato inválido. Use DDD + número (ex: 44988887777)"
     ),
   message: z.string().min(1, "A mensagem não pode estar vazia"),

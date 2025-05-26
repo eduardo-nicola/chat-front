@@ -13,6 +13,7 @@ export function RenderQrCode({ base64 }: PropsRenderQrCode) {
       }}
       src={base64}
       alt="QR Code"
+      className="border-2 border-white"
     />
   ) : (
     <Skeleton className="w-40 h-40 rounded-md" />
