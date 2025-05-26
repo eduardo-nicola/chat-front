@@ -1,0 +1,2 @@
+export const defaultSrc =
+  "https://scontent.fumu6-1.fna.fbcdn.net/v/t1.6435-9/117643836_608551259807837_2589515905909791764_n.png?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=7XRfp_k0VG0Q7kNvwHnU7l5&_nc_oc=AdkJ7gUWbfjZ_fl2YCPRRO6_Z4dbU1TCBYsCMkFg3GfHUfn00mOcpVkprDs1biejzQQ&_nc_zt=23&_nc_ht=scontent.fumu6-1.fna&_nc_gid=nfQNk4JFureurNc9mW-PWg&oh=00_AfIrfZJq1fH4L7eUXnR8PbnVwbB2-Lhz2Le-Z_Tza4SBxw&oe=685B5EAF";

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { QrCode } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,18 +11,35 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import api from "@/services/api";
+import { RenderQrCode } from "./render-qrcode";
 
 export function ConnectButton() {
   const [open, setOpen] = useState(false);
+  const [qrcode, setQrcode] = useState("");
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (open) {
+      getQrCode();
+    }
+  }, [open]);
 
   const handleConnect = () => {
     setOpen(false);
     toast({
-      title: "Connected Successfully",
-      description: "Your device has been connected to the web client.",
+      title: "Conectado com Sucesso",
+      description: "Seu dispositivo foi conectado ao cliente web.",
       variant: "success",
     });
+  };
+
+  const getQrCode = async () => {
+    const { data } = await api.get("/whatsapp/qr");
+    data as { message: string; qr: string };
+    if (data.qr) {
+      setQrcode(data.qr);
+    }
   };
 
   return (
@@ -32,34 +49,21 @@ export function ConnectButton() {
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md bg-neutral-900">
           <DialogHeader>
-            <DialogTitle>Connect to WhatsApp</DialogTitle>
+            <DialogTitle>Conectar ao WhatsApp</DialogTitle>
             <DialogDescription>
-              Scan the QR code with your phone to connect WhatsApp.
+              Escaneie o código QR com seu celular para conectar ao WhatsApp.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col items-center justify-center p-6 space-y-4">
-            <div className="w-64 h-64 bg-white p-4 rounded-lg flex items-center justify-center">
-              <div className="relative w-full h-full border-8 border-blue-600 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 grid grid-cols-5 grid-rows-5 gap-1 p-2">
-                  {Array.from({ length: 25 }).map((_, i) => (
-                    <div key={i} className="bg-black"></div>
-                  ))}
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white flex items-center justify-center rounded-lg">
-                    <div className="w-12 h-12 bg-blue-600 rounded-md"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <RenderQrCode base64={qrcode} />
             <p className="text-sm text-gray-500 text-center">
-              Keep your phone near the computer and make sure it&apos;s
-              connected to the internet.
+              Mantenha seu celular próximo ao computador e certifique-se de que
+              ele está conectado à internet.
             </p>
             <Button onClick={handleConnect} className="w-full">
-              I&apos;ve Scanned the Code
+              Já escaneei o código
             </Button>
           </div>
         </DialogContent>

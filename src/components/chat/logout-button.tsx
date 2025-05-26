@@ -14,18 +14,24 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { removeCookie } from "typescript-cookie";
+import { useRouter } from "next/navigation";
 
 export function LogoutButton() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const { toast } = useToast();
 
   const handleLogout = () => {
-    setOpen(false);
+    removeCookie("chat_app_tk");
     toast({
-      title: "Logged Out",
-      description: "You have been successfully logged out.",
+      title: "Desconectado",
+      description: "Você saiu da sua conta com sucesso.",
       variant: "default",
     });
+    setTimeout(() => {
+      router.push("/home");
+    }, 1000);
   };
 
   return (
@@ -35,21 +41,16 @@ export function LogoutButton() {
       </Button>
 
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-neutral-900">
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Are you sure you want to log out?
-            </AlertDialogTitle>
+            <AlertDialogTitle>Tem certeza de que deseja sair?</AlertDialogTitle>
             <AlertDialogDescription>
-              Logging out will disconnect this device from your WhatsApp
-              account.
+              Sair irá desconectar este dispositivo da sua conta do WhatsApp.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleLogout}>
-              Log Out
-            </AlertDialogAction>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout}>Sair</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

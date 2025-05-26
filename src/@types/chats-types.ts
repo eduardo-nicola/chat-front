@@ -1,18 +1,17 @@
-export interface Conversation {
-  id: string
-  name: string
-  avatar: string
-  lastMessage: string
-  lastMessageTime: string
-  unreadCount: number
-  online: boolean
+export interface Chat {
+  id: string;
+  clientId: string;
+  fromPhone: string;
+  fromName: string | null;
+  avatar: string | null;
+  wpId: string;
 }
 
 export interface Message {
-  id: string
-  conversationId: string
-  sender: "me" | "other"
-  content: string
-  timestamp: string
-  read: boolean
+  message: string;
+  id: string;
+  clientId: string;
+  chatId: string;
+  fromPhone: string;
+  senderIsMy: boolean;
 }
