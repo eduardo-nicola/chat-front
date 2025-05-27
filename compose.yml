@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  svc-nextjs:
+    build:
+      context: .
+      dockerfile: node.Dockerfile
+    env_file:
+      - ./.env.local
+    container_name: svc-nextjs
+    environment:
+      NEXT_PUBLIC_SVC_BACK: ${NEXT_PUBLIC_SVC_BACK}
+    ports:
+      - "3001:3001"
+    networks:
+      - chat-network
+    volumes:
+      - ./:/usr/src/app
+
+networks:
+  chat-network:
+    name: chat-network
+    driver: bridge
