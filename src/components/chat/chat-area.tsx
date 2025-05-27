@@ -34,6 +34,12 @@ export function ChatArea({ activeChat, messages, setMessages }: ChatAreaProps) {
     setMessages(data);
   };
 
+  const pushMessage = (data: Message) => {
+    const list = [...messages, data];
+    setMessages(list);
+    setNewMessage("");
+  };
+
   const onSubmit = () => {
     if (!activeChat?.fromPhone) {
       toast({
@@ -43,13 +49,23 @@ export function ChatArea({ activeChat, messages, setMessages }: ChatAreaProps) {
       });
       return;
     }
+    const chatPhone = activeChat.wpId.replace(/@c.us/, "");
 
     const bodySubmit: SendMessageFormData = {
       message: newMessage,
-      phone: activeChat.fromPhone,
+      phone: chatPhone,
     };
 
-    onSendMessage(bodySubmit);
+    const fackdata: Message = {
+      chatId: activeChat.id,
+      id: crypto.randomUUID(),
+      message: newMessage,
+      senderIsMy: true,
+      clientId: "",
+      fromPhone: activeChat.fromPhone,
+    };
+
+    onSendMessage(bodySubmit, () => pushMessage(fackdata));
   };
 
   if (!activeChat) {
@@ -123,7 +139,7 @@ export function ChatArea({ activeChat, messages, setMessages }: ChatAreaProps) {
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && newMessage.trim()) {
-              setNewMessage("");
+              onSubmit();
             }
           }}
         />
